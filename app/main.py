@@ -20,10 +20,12 @@ app.add_middleware(
         "http://localhost:5173", 
         "http://127.0.0.1:5173",
         "https://casa-de-padua.web.app",  # Dominio de Firebase
-        "https://casa-de-padua.firebaseapp.com"  # Dominio alternativo de Firebase
+        "https://casa-de-padua.firebaseapp.com",  # Dominio alternativo de Firebase
+        "https://casa-de-padua-d3552.web.app",
+        "https://casa-de-padua-d3552.firebaseapp.com"
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST"],  # Métodos específicos permitidos
+    allow_methods=["*"],  # Permitir todos los métodos
     allow_headers=["*"],
 )
 
