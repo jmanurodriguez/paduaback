@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
 from .scraper.basketball_scraper import BasketballScraper
+from .scraper.voley_scraper import VoleyScraper
 import logging
 
 # Configurar el logging
@@ -31,6 +32,10 @@ app.add_middleware(
 
 # Instanciar el scraper
 basketball_scraper = BasketballScraper()
+
+# Instanciar scrapers de voley para cada tira
+voley_tira_a_scraper = VoleyScraper("https://metrovoley.com.ar/tournament/75/standings?group=482")
+voley_tira_b_scraper = VoleyScraper("https://metrovoley.com.ar/tournament/129/standings?group=497")
 
 # Función que ejecutará el scraper y registrará cuándo se realizó la actualización
 def update_basketball_data():
@@ -77,6 +82,20 @@ async def update_basketball_standings():
     Fuerza una actualización de los datos de la tabla de posiciones de básquet
     """
     return update_basketball_data()
+
+@app.get("/api/standings/voley/tira-a")
+async def get_voley_tira_a_standings():
+    """
+    Obtiene la tabla de posiciones de voley Tira A.
+    """
+    return voley_tira_a_scraper.get_cached_standings()
+
+@app.get("/api/standings/voley/tira-b")
+async def get_voley_tira_b_standings():
+    """
+    Obtiene la tabla de posiciones de voley Tira B.
+    """
+    return voley_tira_b_scraper.get_cached_standings()
 
 # Event handler para limpiar el scheduler cuando se apaga la aplicación
 @app.on_event("shutdown")
