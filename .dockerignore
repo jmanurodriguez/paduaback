@@ -1,0 +1,41 @@
+# Environment
+env/
+venv/
+.env
+.venv
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Version control
+.git
+.github
+.gitignore
+
+# Debug files
+iframe_debug_2.html
+response_debug.html
+
+# Logs
+*.log
+
+# Cache
+.pytest_cache/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Miscellaneous
+README.md
+LICENSE
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
