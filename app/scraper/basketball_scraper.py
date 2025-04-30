@@ -12,14 +12,14 @@ logger = logging.getLogger(__name__)
 
 class BasketballScraper:
     def __init__(self):
-        # URL principal de la página
-        self.url = "https://www.argentina.basketball/liga-federal/liga-federal-3x3/conferencia-metropolitana-zona-b-2025"
+        # URL principal de la página - cambiada para usar la liga regular
+        self.url = "https://www.argentina.basketball/liga-federal/fixture-posiciones/conferencia-metropolitana-zona-b-2025"
         self.last_update = None
         self.standings = None
         # URLs alternativas para tabla de posiciones si no se encuentra en la página principal
         self.alternative_urls = [
-            "https://www.argentina.basketball/liga-federal/posiciones/liga-federal-3x3",
-            "https://www.argentina.basketball/liga-federal/liga-federal-3x3/posiciones"
+            "https://www.argentina.basketball/liga-federal/fixture-posiciones",
+            "https://www.argentina.basketball/liga-federal/posiciones"
         ]
 
     def get_standings(self) -> Dict:
