@@ -97,6 +97,35 @@ async def get_voley_tira_b_standings():
     """
     return voley_tira_b_scraper.get_cached_standings()
 
+# Nuevos endpoints para obtener fixtures
+@app.get("/api/fixtures/basquet")
+async def get_basketball_fixtures():
+    """
+    Obtiene los próximos partidos del fixture de básquet.
+    """
+    return basketball_scraper.get_cached_fixtures()
+
+@app.get("/api/fixtures/basquet/update")
+async def update_basketball_fixtures():
+    """
+    Fuerza una actualización de los datos del fixture de básquet
+    """
+    return basketball_scraper.get_fixtures()
+
+@app.get("/api/fixtures/voley/tira-a")
+async def get_voley_tira_a_fixtures():
+    """
+    Obtiene los próximos partidos del fixture de voley Tira A.
+    """
+    return voley_tira_a_scraper.get_cached_fixtures()
+
+@app.get("/api/fixtures/voley/tira-b")
+async def get_voley_tira_b_fixtures():
+    """
+    Obtiene los próximos partidos del fixture de voley Tira B.
+    """
+    return voley_tira_b_scraper.get_cached_fixtures()
+
 # Event handler para limpiar el scheduler cuando se apaga la aplicación
 @app.on_event("shutdown")
 def shutdown_event():
