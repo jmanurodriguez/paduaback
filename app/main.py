@@ -20,6 +20,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173", 
         "http://127.0.0.1:5173",
+        "http://localhost:5174",  # Añadir puerto 5174 para desarrollo local
+        "http://127.0.0.1:5174",  # Añadir puerto 5174 para desarrollo local
         "https://casa-de-padua.web.app",  # Dominio de Firebase
         "https://casa-de-padua.firebaseapp.com",  # Dominio alternativo de Firebase
         "https://casa-de-padua-d3552.web.app",
