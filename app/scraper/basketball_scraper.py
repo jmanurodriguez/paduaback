@@ -14,10 +14,22 @@ class BasketballScraper:
     def __init__(self):
         # URL principal de la página - cambiada para usar la liga regular
         self.url = "https://www.argentina.basketball/liga-federal/fixture-posiciones/conferencia-metropolitana-zona-b-2025"
+        # URLs para tira A y tira B
+        self.url_tira_a = "https://www.argentina.basketball/liga-federal/fixture-posiciones/conferencia-metropolitana-zona-a-2025"
+        self.url_tira_b = "https://www.argentina.basketball/liga-federal/fixture-posiciones/conferencia-metropolitana-zona-b-2025"
+        
+        # Variables para almacenar datos
         self.last_update = None
         self.standings = None
         self.fixtures = None
         self.fixtures_update = None
+        
+        # Variables específicas para tira A y tira B
+        self.standings_tira_a = None
+        self.last_update_tira_a = None
+        self.standings_tira_b = None
+        self.last_update_tira_b = None
+        
         # URLs alternativas para tabla de posiciones si no se encuentra en la página principal
         self.alternative_urls = [
             "https://www.argentina.basketball/liga-federal/fixture-posiciones",

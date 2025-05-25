@@ -15,18 +15,26 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Configurar CORS de manera más específica
+# Definir orígenes permitidos
+origins = [
+    # Permitir cualquier localhost para desarrollo
+    "http://localhost",
+    "http://127.0.0.1",
+    # Dominios específicos de producción
+    "https://casa-de-padua.web.app",  
+    "https://casa-de-padua.firebaseapp.com",
+    "https://casa-de-padua-d3552.web.app",
+    "https://casa-de-padua-d3552.firebaseapp.com"
+]
+
+# Para entornos de desarrollo, añadir todos los puertos comunes
+for port in range(3000, 6000):
+    origins.append(f"http://localhost:{port}")
+    origins.append(f"http://127.0.0.1:{port}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173", 
-        "http://127.0.0.1:5173",
-        "http://localhost:5174",  # Añadir puerto 5174 para desarrollo local
-        "http://127.0.0.1:5174",  # Añadir puerto 5174 para desarrollo local
-        "https://casa-de-padua.web.app",  # Dominio de Firebase
-        "https://casa-de-padua.firebaseapp.com",  # Dominio alternativo de Firebase
-        "https://casa-de-padua-d3552.web.app",
-        "https://casa-de-padua-d3552.firebaseapp.com"
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos
     allow_headers=["*"],
@@ -38,6 +46,7 @@ basketball_scraper = BasketballScraper()
 # Instanciar scrapers de voley para cada tira
 voley_tira_a_scraper = VoleyScraper("https://metrovoley.com.ar/tournament/75/standings?group=482")
 voley_tira_b_scraper = VoleyScraper("https://metrovoley.com.ar/tournament/129/standings?group=497")
+voley_primera_scraper = VoleyScraper("https://metrovoley.com.ar/tournament/188/standings")
 
 # Función que ejecutará el scraper y registrará cuándo se realizó la actualización
 def update_basketball_data():
@@ -99,6 +108,13 @@ async def get_voley_tira_b_standings():
     """
     return voley_tira_b_scraper.get_cached_standings()
 
+@app.get("/api/standings/voley/primera")
+async def get_voley_primera_standings():
+    """
+    Obtiene la tabla de posiciones de voley Primera División.
+    """
+    return voley_primera_scraper.get_cached_standings()
+
 # Nuevos endpoints para obtener fixtures
 @app.get("/api/fixtures/basquet")
 async def get_basketball_fixtures():
@@ -127,6 +143,13 @@ async def get_voley_tira_b_fixtures():
     Obtiene los próximos partidos del fixture de voley Tira B.
     """
     return voley_tira_b_scraper.get_cached_fixtures()
+
+@app.get("/api/fixtures/voley/primera")
+async def get_voley_primera_fixtures():
+    """
+    Obtiene los próximos partidos del fixture de voley Primera División.
+    """
+    return voley_primera_scraper.get_cached_fixtures()
 
 # Event handler para limpiar el scheduler cuando se apaga la aplicación
 @app.on_event("shutdown")
