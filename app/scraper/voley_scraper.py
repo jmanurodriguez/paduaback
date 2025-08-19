@@ -9,6 +9,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 import time
 
 logging.basicConfig(level=logging.INFO,
@@ -24,13 +26,13 @@ class VoleyScraper:
         self.fixtures_update = None
 
     def get_standings(self):
-        try:
-            # Configurar Selenium en modo headless
+        try:            # Configurar Selenium en modo headless
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
-            driver = webdriver.Chrome(options=options)
+            service = Service(ChromeDriverManager().install())
+            driver = webdriver.Chrome(service=service, options=options)
             driver.get(self.url)
             time.sleep(2)  # Esperar a que cargue la página
             
