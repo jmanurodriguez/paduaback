@@ -24,7 +24,9 @@ origins = [
     "https://casa-de-padua.web.app",  
     "https://casa-de-padua.firebaseapp.com",
     "https://casa-de-padua-d3552.web.app",
-    "https://casa-de-padua-d3552.firebaseapp.com"
+    "https://casa-de-padua-d3552.firebaseapp.com",
+    # Dominio personalizado
+    "https://casadepadua1926.com.ar"
 ]
 
 # Para entornos de desarrollo, añadir todos los puertos comunes
